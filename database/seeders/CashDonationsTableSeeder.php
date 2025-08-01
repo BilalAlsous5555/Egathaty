@@ -16,7 +16,7 @@ class CashDonationsTableSeeder extends Seeder
         $cashDonations = [
             [
                 'donation_id' => 1, 
-                'amount' => 500.00,
+                'amount' => 500,
                 'currency' => 'USD',
                 'receipt_number' => 'RCPT-1001',
             ],
