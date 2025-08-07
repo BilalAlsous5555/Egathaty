@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -16,8 +15,8 @@ return new class extends Migration
             $table->foreignId('donor_id')->constrained('donors')->onDelete('cascade');
             $table->date('report_period_start');
             $table->date('report_period_end');
-            $table->string('report_file_path');
-            $table->foreignId('generated_by_user_id')->nullable()->constrained('users')->onDelete('set null'); 
+            $table->string('report_file_path')->nullable();
+            $table->foreignId('generated_by_user_id')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamps();
         });
     }
