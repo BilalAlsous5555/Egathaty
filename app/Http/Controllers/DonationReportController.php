@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\DonationReport;
 use App\Http\Requests\DonationReportRequests\StoreDonationReportRequest;
-use App\Http\Requests\DonationReportRequests\UpdateDonationReportRequest;
 use App\Services\DonationReportService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+
 use Throwable;
 
 class DonationReportController extends Controller
@@ -22,6 +22,8 @@ class DonationReportController extends Controller
     public function __construct(DonationReportService $donationReportService)
     {
         $this->donationReportService = $donationReportService;
+        $this->authorizeResource(DonationReport::class, 'donations_report');
+
     }
 
     /**
