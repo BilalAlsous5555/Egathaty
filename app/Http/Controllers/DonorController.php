@@ -7,7 +7,7 @@ use App\Models\Donor;
 use App\Http\Requests\DonorRequests\StoreDonorRequest;
 use App\Services\DonorService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request; 
+use Illuminate\Http\Request;
 class DonorController extends Controller
 {
     protected $donorService;
@@ -21,6 +21,11 @@ class DonorController extends Controller
     public function __construct(DonorService $donorService)
     {
         $this->donorService = $donorService;
+
+
+
+        $this->authorizeResource(Donor::class, 'donor');
+
     }
 
     /**

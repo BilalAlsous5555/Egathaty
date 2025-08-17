@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class InKindDonation extends Model
 {
@@ -18,12 +19,18 @@ class InKindDonation extends Model
     ];
 
     protected $casts = [
-        'expiry_date' => 'date', // لتحويل تاريخ انتهاء الصلاحية إلى كائن Date
+        'expiry_date' => 'date',
     ];
 
-    // علاقة InKindDonation مع Donation (التبرع العيني ينتمي إلى تبرع رئيسي واحد)
+    
     public function donation()
     {
         return $this->belongsTo(Donation::class);
+    }
+
+
+    public function inventoryItem(): HasOne
+    {
+        return $this->hasOne(InventoryItem::class, 'in_kind_donation_id');
     }
 }

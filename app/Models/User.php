@@ -23,7 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role', // تأكد من إضافة عمود الدور إذا لم يكن موجودًا
+        'role', 
 
     ];
 
