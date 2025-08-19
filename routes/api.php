@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\DonationReportController;
 use App\Http\Controllers\DonorController;
+use App\Http\Controllers\InventoryItemController;
+use App\Http\Controllers\WarehouseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -12,10 +14,20 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::post('/register', [AuthController::class, 'register']);
-Route::delete('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 Route::post('/login', [AuthController::class, 'login']);
 
-Route::apiResource('donations', DonationController::class);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::delete('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
-Route::resource('donors', DonorController::class);
-Route::apiResource('donations-reports', DonationReportController::class);
+    Route::apiResource('donations', DonationController::class);
+
+    Route::resource('donors', DonorController::class);
+    Route::apiResource('donations-reports', DonationReportController::class);
+
+    Route::apiResource('warehouses', WarehouseController::class);
+
+    Route::apiResource('inventory-items', InventoryItemController::class);
+
+
+});
+

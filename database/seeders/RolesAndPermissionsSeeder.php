@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-use App\Models\User;
 use App\Enums\Permissions;
 use App\Enums\Roles;
 
@@ -61,22 +60,26 @@ class RolesAndPermissionsSeeder extends Seeder
             Permissions::TRANSACTIONS_VIEW_ANY,
             Permissions::TRANSACTIONS_DECIDE,
 
-            // Placeholder Permissions for other modules
-            'view inventory',
-            'manage inventory',
-            'view distributions',
-            'manage distributions',
-            'view beneficiaries',
-            'manage beneficiaries',
-            'view audit logs',
-            'manage quality control',
+                // Inventory Items Permissions (Specific)
+            Permissions::INVENTORY_CREATE,
+            Permissions::INVENTORY_UPDATE,
+            Permissions::INVENTORY_DELETE,
+            Permissions::INVENTORY_VIEW,
+            Permissions::INVENTORY_VIEW_ANY,
+
+                // General / Other Modules Permissions (now all from Enums)
+            Permissions::DISTRIBUTIONS_VIEW,
+            Permissions::DISTRIBUTIONS_MANAGE,
+            Permissions::BENEFICIARIES_VIEW,
+            Permissions::BENEFICIARIES_MANAGE,
+            Permissions::AUDIT_LOGS_VIEW,
+            Permissions::QUALITY_CONTROL_MANAGE,
         ];
 
         foreach ($allPermissions as $permissionName) {
             Permission::firstOrCreate(['name' => $permissionName, 'guard_name' => $guardName]);
         }
 
-        // 2. Define all Roles
         $superAdminRole = Role::firstOrCreate(['name' => Roles::GENERAL_SYSTEM_ADMINISTRATOR, 'guard_name' => $guardName]);
         $donorRole = Role::firstOrCreate(['name' => Roles::DONOR_ENTITY, 'guard_name' => $guardName]);
         $supplyManagerRole = Role::firstOrCreate(['name' => Roles::SUPPLIES_WAREHOUSE_MANAGER, 'guard_name' => $guardName]);
@@ -87,15 +90,11 @@ class RolesAndPermissionsSeeder extends Seeder
         $qualityMonitorRole = Role::firstOrCreate(['name' => Roles::QUALITY_CONTROL_AUDIT_OFFICER, 'guard_name' => $guardName]);
 
 
-        // 3. Assign Permissions to Roles
 
-        // Super Administrator: Has all permissions
         $superAdminRole->givePermissionTo(Permission::all());
 
-        // Donor: Can only view their own donation reports
         $donorRole->givePermissionTo(Permissions::DONATIONS_VIEW_ANY);
 
-        // Supply and Warehouse Manager: Manages inventory, views donors and reports
         $supplyManagerRole->givePermissionTo([
             Permissions::DONORS_VIEW_ANY,
             Permissions::DONORS_CREATE,
@@ -109,57 +108,56 @@ class RolesAndPermissionsSeeder extends Seeder
             Permissions::TRANSACTIONS_CREATE,
             Permissions::TRANSACTIONS_UPDATE,
             Permissions::TRANSACTIONS_DELETE,
-            'view inventory',
-            'manage inventory',
+            Permissions::INVENTORY_VIEW_ANY,
+            Permissions::INVENTORY_CREATE,
+            Permissions::INVENTORY_UPDATE,
+            Permissions::INVENTORY_DELETE,
         ]);
 
-        // Logistics and Transport Manager: Manages shipments, views inventory and reports
         $logisticsManagerRole->givePermissionTo([
             Permissions::DONORS_VIEW_ANY,
             Permissions::DONATIONS_VIEW_ANY,
             Permissions::WAREHOUSES_VIEW_ANY,
             Permissions::TRANSACTIONS_VIEW_ANY,
             Permissions::TRANSACTIONS_DECIDE,
-            'view inventory',
-            'view distributions',
-            'manage distributions',
+            Permissions::INVENTORY_VIEW_ANY,
+            Permissions::DISTRIBUTIONS_VIEW,
+            Permissions::DISTRIBUTIONS_MANAGE,
         ]);
 
-        // Field Distribution Program Manager: Manages distribution campaigns, views beneficiaries and reports
         $fieldProgramManagerRole->givePermissionTo([
             Permissions::DONORS_VIEW_ANY,
             Permissions::DONATIONS_VIEW_ANY,
+            Permissions::WAREHOUSES_VIEW_ANY,
             Permissions::TRANSACTIONS_VIEW_ANY,
-            'view distributions',
-            'manage distributions',
-            'view beneficiaries',
+            Permissions::INVENTORY_VIEW_ANY,
+            Permissions::DISTRIBUTIONS_VIEW,
+            Permissions::DISTRIBUTIONS_MANAGE,
+            Permissions::BENEFICIARIES_VIEW,
         ]);
 
-        // Field Distribution Team: Records beneficiaries, documents deliveries
         $fieldTeamRole->givePermissionTo([
             Permissions::DONORS_VIEW_ANY,
             Permissions::DONATIONS_VIEW_ANY,
-            'view beneficiaries',
-            'manage beneficiaries',
-            'view distributions',
+            Permissions::INVENTORY_VIEW_ANY,
+            Permissions::BENEFICIARIES_VIEW,
+            Permissions::BENEFICIARIES_MANAGE,
+            Permissions::DISTRIBUTIONS_VIEW,
         ]);
 
-        // Beneficiary / Head of Household: Can only view their own received aid records
         $finalBeneficiaryRole->givePermissionTo([
-            // Specific permissions for beneficiaries (e.g., 'view own aid records')
         ]);
 
-        // Quality/Audit Monitor: Views all relevant records for auditing
         $qualityMonitorRole->givePermissionTo([
             Permissions::DONORS_VIEW_ANY,
             Permissions::DONATIONS_VIEW_ANY,
             Permissions::WAREHOUSES_VIEW_ANY,
             Permissions::TRANSACTIONS_VIEW_ANY,
-            'view inventory',
-            'view distributions',
-            'view beneficiaries',
-            'view audit logs',
-            'manage quality control',
+            Permissions::INVENTORY_VIEW_ANY,
+            Permissions::DISTRIBUTIONS_VIEW,
+            Permissions::BENEFICIARIES_VIEW,
+            Permissions::AUDIT_LOGS_VIEW,
+            Permissions::QUALITY_CONTROL_MANAGE,
         ]);
 
 

@@ -60,10 +60,31 @@ class Permissions
     public const TRANSACTIONS_VIEW_ANY       = 'transactions.viewAny';
     public const TRANSACTIONS_DECIDE         = 'transactions.decide'; // accept/reject
 
+    // Inventory Items (NEW - Specific Inventory Permissions)
+    public const INVENTORY_CREATE    = 'inventory.create';
+    public const INVENTORY_UPDATE    = 'inventory.update';
+    public const INVENTORY_DELETE    = 'inventory.delete';
+    public const INVENTORY_VIEW      = 'inventory.view';
+    public const INVENTORY_VIEW_ANY  = 'inventory.viewAny';
+
     // =========================
-    // Grouped Collections
+    // General / Other Modules Permissions (Cleaned up)
     // =========================
-    private array $users = [
+
+    public const DISTRIBUTIONS_VIEW     = 'distributions.view';
+    public const DISTRIBUTIONS_MANAGE   = 'distributions.manage';
+
+    public const BENEFICIARIES_VIEW     = 'beneficiaries.view';
+    public const BENEFICIARIES_MANAGE   = 'beneficiaries.manage';
+
+    public const AUDIT_LOGS_VIEW        = 'audit_logs.view';
+    public const QUALITY_CONTROL_MANAGE = 'quality_control.manage';
+
+
+    // =========================
+    // Grouped Collections (Make sure these are static)
+    // =========================
+    private static array $users = [
         self::USERS_CREATE,
         self::USERS_UPDATE,
         self::USERS_DELETE,
@@ -71,7 +92,7 @@ class Permissions
         self::USERS_VIEW_ANY,
     ];
 
-    private array $roles = [
+    private static array $roles = [
         self::ROLES_CREATE,
         self::ROLES_UPDATE,
         self::ROLES_DELETE,
@@ -79,7 +100,7 @@ class Permissions
         self::ROLES_VIEW_ANY,
     ];
 
-    private array $donations = [
+    private static array $donations = [
         self::DONATIONS_CREATE,
         self::DONATIONS_UPDATE,
         self::DONATIONS_DELETE,
@@ -88,7 +109,7 @@ class Permissions
         self::DONATIONS_VIEW_DOCUMENTS,
     ];
 
-    private array $donors = [
+    private static array $donors = [
         self::DONORS_CREATE,
         self::DONORS_UPDATE,
         self::DONORS_DELETE,
@@ -96,7 +117,7 @@ class Permissions
         self::DONORS_VIEW_ANY,
     ];
 
-    private array $warehouses = [
+    private static array $warehouses = [
         self::WAREHOUSES_CREATE,
         self::WAREHOUSES_UPDATE,
         self::WAREHOUSES_DELETE,
@@ -104,7 +125,7 @@ class Permissions
         self::WAREHOUSES_VIEW_ANY,
     ];
 
-    private array $transactions = [
+    private static array $transactions = [
         self::TRANSACTIONS_CREATE,
         self::TRANSACTIONS_UPDATE,
         self::TRANSACTIONS_DELETE,
@@ -112,6 +133,31 @@ class Permissions
         self::TRANSACTIONS_VIEW_ANY,
         self::TRANSACTIONS_DECIDE,
     ];
+
+    // New grouped collections for the added permissions
+    private static array $inventoryItems = [
+        self::INVENTORY_CREATE,
+        self::INVENTORY_UPDATE,
+        self::INVENTORY_DELETE,
+        self::INVENTORY_VIEW,
+        self::INVENTORY_VIEW_ANY,
+    ];
+
+    private static array $distributions = [
+        self::DISTRIBUTIONS_VIEW,
+        self::DISTRIBUTIONS_MANAGE,
+    ];
+
+    private static array $beneficiaries = [
+        self::BENEFICIARIES_VIEW,
+        self::BENEFICIARIES_MANAGE,
+    ];
+
+    private static array $auditAndQualityControl = [
+        self::AUDIT_LOGS_VIEW,
+        self::QUALITY_CONTROL_MANAGE,
+    ];
+
 
     // All permissions (for seeding)
     public static function all(): array
@@ -122,7 +168,11 @@ class Permissions
             self::$donations,
             self::$donors,
             self::$warehouses,
-            self::$transactions
+            self::$transactions,
+            self::$inventoryItems, 
+            self::$distributions,
+            self::$beneficiaries,
+            self::$auditAndQualityControl
         )));
     }
 }
