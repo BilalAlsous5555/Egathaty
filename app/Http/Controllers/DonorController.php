@@ -7,16 +7,14 @@ use App\Models\Donor;
 use App\Http\Requests\DonorRequests\StoreDonorRequest;
 use App\Services\DonorService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 class DonorController extends Controller
 {
     protected $donorService;
 
     /**
      * Constructor for DonorController.
-     * Laravel's service container will automatically inject an instance of DonorService.
      *
-     * @param DonorService $donorService The service layer for donor-related operations.
+     * @param DonorService $donorService
      */
     public function __construct(DonorService $donorService)
     {
@@ -42,10 +40,8 @@ class DonorController extends Controller
 
     /**
      * Store a newly created donor in storage.
-     * The request is automatically validated by StoreDonorRequest before reaching this method.
-     * Returns the created donor as JSON with a 201 Created status.
      *
-     * @param  \App\Http\Requests\DonorRequests\StoreDonorRequest  $request The validated request.
+     * @param  \App\Http\Requests\DonorRequests\StoreDonorRequest  $request
      * @return JsonResponse
      */
     public function store(StoreDonorRequest $request): JsonResponse
@@ -55,29 +51,27 @@ class DonorController extends Controller
         return response()->json([
             'message' => 'Donor created successfully.',
             'donor' => $donor
-        ], 201); // 201 Created status
+        ], 201);
     }
 
     /**
      * Display the specified donor.
-     * Laravel's route model binding automatically resolves the Donor instance.
-     * Returns the specified donor as JSON.
+
      *
-     * @param  \App\Models\Donor  $donor The Donor model instance.
+     * @param  \App\Models\Donor  $donor
      * @return JsonResponse
      */
     public function show(Donor $donor): JsonResponse
     {
-        return response()->json($donor);
+        $data = $this->donorService->getDonor($donor);
+        return response()->json($data);
     }
 
     /**
      * Update the specified donor in storage.
-     * The request is automatically validated by StoreDonorRequest before reaching this method.
-     * Returns the updated donor as JSON.
      *
-     * @param  \App\Http\Requests\DonorRequests\StoreDonorRequest  $request The validated request.
-     * @param  \App\Models\Donor  $donor The Donor model instance to update.
+     * @param  \App\Http\Requests\DonorRequests\StoreDonorRequest  $request
+     * @param  \App\Models\Donor  $donor
      * @return JsonResponse
      */
     public function update(UpdateDonorRequest $request, Donor $donor): JsonResponse
@@ -86,16 +80,14 @@ class DonorController extends Controller
 
         return response()->json([
             'message' => 'Donor updated successfully.',
-            'donor' => $donor // Return the updated donor
+            'donor' => $donor
         ]);
     }
 
     /**
      * Remove the specified donor from storage.
-     * Laravel's route model binding automatically resolves the Donor instance.
-     * Returns a success message as JSON.
      *
-     * @param  \App\Models\Donor  $donor The Donor model instance to delete.
+     * @param  \App\Models\Donor  $donor
      * @return JsonResponse
      */
     public function destroy(Donor $donor): JsonResponse

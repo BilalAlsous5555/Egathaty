@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Models\InventoryItem;
-use Illuminate\Http\Request; 
+use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -26,11 +26,11 @@ class InventoryItemService
      * Eager loads warehouse and inKindDonation relationships.
      *
      * @param int $id
-     * @return InventoryItem|null
+     * @return
      */
-    public function getInventoryItemById(int $id): ?InventoryItem
+    public function getInventoryItem(InventoryItem $inventoryItem)
     {
-        return InventoryItem::with(['warehouse', 'inKindDonation'])->find($id);
+        return $inventoryItem->load(['warehouse', 'inKindDonation']);
     }
 
     /**

@@ -24,17 +24,17 @@ class WarehouseService
      * Find a single warehouse record by ID.
      *
      * @param int $id
-     * @return Warehouse|null
+     * @return
      */
-    public function getWarehouseById(int $id): ?Warehouse
+    public function getWarehouse(Warehouse $warehouse)
     {
-        return Warehouse::find($id);
+        return $warehouse;
     }
 
     /**
      * Create a new warehouse record.
      *
-     * @param Request $request The validated request data.
+     * @param Request $request 
      * @return Warehouse
      */
     public function createWarehouse(Request $request): Warehouse

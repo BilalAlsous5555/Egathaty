@@ -24,7 +24,7 @@ class InventoryItemController extends Controller
     public function __construct(InventoryItemService $inventoryItemService)
     {
         $this->inventoryItemService = $inventoryItemService;
-         $this->authorizeResource(InventoryItem::class, 'inventory_item');
+        $this->authorizeResource(InventoryItem::class, 'inventory_item');
     }
 
     /**
@@ -76,8 +76,8 @@ class InventoryItemController extends Controller
     public function show(InventoryItem $inventoryItem): JsonResponse
     {
         try {
-            $inventoryItem->load(['warehouse', 'inKindDonation']);
-            return response()->json($inventoryItem);
+            $data = $this->inventoryItemService->getInventoryItem($inventoryItem);
+            return response()->json($data);
         } catch (Throwable $e) {
             Log::error('Error in InventoryItemController@show: ' . $e->getMessage(), ['exception' => $e]);
             return response()->json([

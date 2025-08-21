@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Log;
 
 class WarehouseController extends Controller
 {
-   
+
 
     protected $warehouseService;
 
@@ -76,7 +76,8 @@ class WarehouseController extends Controller
     {
         try {
             $this->authorize('view', $warehouse);
-            return response()->json($warehouse);
+            $data = $this->warehouseService->getWarehouse($warehouse);
+            return response()->json($data);
         } catch (Throwable $e) {
             Log::error('Error in WarehouseController@show: ' . $e->getMessage(), ['exception' => $e]);
             return response()->json([

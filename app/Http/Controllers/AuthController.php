@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\AuthRequest\RegisterRequest;
 use App\Http\Requests\AuthRequest\LoginRequest;
-use App\Enums\Roles; 
+use App\Enums\Roles;
 
 class AuthController extends Controller
 {
@@ -40,7 +40,6 @@ class AuthController extends Controller
      */
     public function login(LoginRequest $request)
     {
-        // Attempt to authenticate the user
         if (!Auth::attempt($request->validated())) {
             return response()->json(['message' => 'Invalid email or password'], 401);
         } else {

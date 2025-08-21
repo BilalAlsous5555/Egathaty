@@ -11,7 +11,7 @@ class DonorService
     /**
      * Retrieve all donor records from the database.
      *
-     * @return Collection A collection of Donor models.
+     * @return Collection 
      */
     public function getAllDonors(): Collection
     {
@@ -21,12 +21,12 @@ class DonorService
     /**
      * Find a single donor record by its primary key (ID).
      *
-     * @param int $id The ID of the donor to find.
-     * @return Donor|null The Donor model if found, otherwise null.
+     * @param int $id
+     * @return Donor|null
      */
-    public function getDonorById(int $id): ?Donor
+    public function getDonor(Donor $donor): ?Donor
     {
-        return Donor::find($id);
+        return $donor;
     }
 
     /**
@@ -36,7 +36,7 @@ class DonorService
      * @param Request $request The validated request data containing the new donor's information.
      * @return Donor The newly created Donor model instance.
      */
-    public function createDonor(Request $request): Donor // Changed type hint from StoreDonorRequest to Request
+    public function createDonor(Request $request): Donor
     {
 
         return Donor::create($request->validated());
@@ -59,12 +59,12 @@ class DonorService
     /**
      * Delete a donor record from the database.
      *
-     * @param Donor $donor The Donor model instance to be deleted.
-     * @return bool True if the deletion was successful, false otherwise.
+     * @param Donor $donor
+     * @return bool
      */
     public function deleteDonor(Donor $donor): bool
     {
-        
+
         return $donor->delete();
     }
 }

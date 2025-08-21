@@ -21,13 +21,11 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::apiResource('donations', DonationController::class);
 
-    Route::resource('donors', DonorController::class);
+    Route::apiResource('donors', DonorController::class);
     Route::apiResource('donations-reports', DonationReportController::class);
 
     Route::apiResource('warehouses', WarehouseController::class);
 
     Route::apiResource('inventory-items', InventoryItemController::class);
-
-
 });
 

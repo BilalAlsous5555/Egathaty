@@ -5,16 +5,15 @@ namespace App\Policies;
 use App\Models\User;
 use App\Models\Donor;
 use App\Enums\Permissions;
-use App\Enums\Roles;     
-use Illuminate\Auth\Access\Response;
+use App\Enums\Roles;
 
 class DonorPolicy
 {
     /**
      * Allow Super Administrator to bypass all authorization checks.
      *
-     * @param User $user The authenticated user.
-     * @param string $ability The ability being checked (e.g., 'create', 'view').
+     * @param User $user
+     * @param string $ability
      * @return bool|null
      */
     public function before(User $user, string $ability): ?bool
@@ -28,7 +27,7 @@ class DonorPolicy
     /**
      * Determine whether the user can view any donors.
      *
-     * @param User $user The authenticated user.
+     * @param User $user
      * @return bool
      */
     public function viewAny(User $user): bool
@@ -39,8 +38,8 @@ class DonorPolicy
     /**
      * Determine whether the user can view a specific donor.
      *
-     * @param User $user The authenticated user.
-     * @param Donor $donor The Donor model instance.
+     * @param User $user .
+     * @param Donor $donor
      * @return bool
      */
     public function view(User $user, Donor $donor): bool
